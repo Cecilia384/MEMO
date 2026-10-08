@@ -1,6 +1,6 @@
 # Setup and Model Weights
 
-Run commands from the repository root. Inference requires Linux, Python 3.10, and one visible NVIDIA CUDA GPU. The existing reference environment uses an RTX A6000; a fresh installation has not been certified.
+Run commands from the repository root. Inference requires Linux, Python 3.10, and one visible NVIDIA CUDA GPU. A fresh installation has not been certified.
 
 ```bash
 conda create -n memo python=3.10 -y
@@ -31,11 +31,13 @@ curl -L --fail \
 
 CLIP, Grounding-DINO, and backbone directories need their configuration and processor/tokenizer files as well as weights. SAM2 uses `configs/sam2.1/sam2.1_hiera_l.yaml` from the installed SAM2 package.
 
-| Config model | Backbone |
-| --- | --- |
-| `qwen3` | Qwen3-VL-8B-Instruct, per-frame image mode |
-| `qwen25` | Qwen2.5-VL-7B-Instruct |
-| `llava_7b` | LLaVA-OneVision Qwen2 7B, Hugging Face version |
-| `llava_05b` | LLaVA-OneVision Qwen2 0.5B, Hugging Face version |
+| Config model | Backbone | GPU memory to prepare |
+| --- | --- | ---: |
+| `qwen3` | Qwen3-VL-8B-Instruct, per-frame image mode | At least 48 GB |
+| `qwen25` | Qwen2.5-VL-7B-Instruct | At least 24 GB |
+| `llava_7b` | LLaVA-OneVision Qwen2 7B, Hugging Face version | At least 24 GB |
+| `llava_05b` | LLaVA-OneVision Qwen2 0.5B, Hugging Face version | 24 GB validated; smaller cards untested |
 
-Use `--model-path` for the matching backbone. The exact manuscript model revisions were not provided; pin revisions for comparisons. The runner requires exactly one visible GPU. CUDA numbering can differ from `nvidia-smi`; `CUDA_VISIBLE_DEVICES=GPU-<UUID>` selects a card unambiguously. A Qwen3-VL-8B two-video diagnostic exceeded 24 GB on an RTX 4090 and completed on a 48 GB RTX A6000.
+These are conservative capacities from two-question benchmark checks, not exact lower bounds. Peak PyTorch allocation was approximately 25.5 GiB for Qwen3, 21.8 GiB for Qwen2.5, 21.3 GiB for LLaVA-7B, and 8.0 GiB for LLaVA-0.5B; CUDA and other processes need additional memory. Longer streams may require more. Qwen3 exceeded 24 GB on an RTX 4090 and completed on a 48 GB RTX A6000.
+
+Use `--model-path` for the matching backbone. The exact manuscript model revisions were not provided; pin revisions for comparisons. The runner requires exactly one visible GPU. CUDA numbering can differ from `nvidia-smi`; `CUDA_VISIBLE_DEVICES=GPU-<UUID>` selects a card unambiguously.
