@@ -1,0 +1,35 @@
+% Online rows from Table 1 of https://arxiv.org/abs/2609.38900.
+% Paper-reported averages; this table is not generated from release outputs.
+\begin{table*}[t]
+\centering
+\caption{Online video understanding results (average accuracy, \%).}
+\label{tab:memo-online-results}
+\begin{tabular}{lccc}
+\hline
+Method & Frames & OVO-Bench & StreamingBench \\
+\hline
+\multicolumn{4}{l}{\textit{Online methods with training}} \\
+VideoLLM-online-8B & 2 fps & 20.8 & 36.0 \\
+Dispider-7B & 1 fps & 54.6 & 67.6 \\
+Flash-VStream-7B & 1 fps & 29.9 & 23.2 \\
+ViSpeak & 1 fps & 66.3 & 74.4 \\
+TimeChat-Online-7B & 1 fps & 61.9 & 75.3 \\
+StreamForest-7B & 1 fps & 61.2 & 77.3 \\
+\hline
+\multicolumn{4}{l}{\textit{Training-free online methods}} \\
+LLaVA-OneVision-0.5B & 32 & 49.7 & 59.6 \\
+\quad + ReKV & 0.5 fps & 43.8 & 57.4 \\
+\quad \textbf{+ MEMO} & 1 fps & 50.4 & 59.5 \\
+LLaVA-OneVision-7B & 32 & 63.1 & 71.1 \\
+\quad + ReKV & 0.5 fps & 57.3 & 69.1 \\
+\quad + LiveVLM & 0.5 fps & -- & 72.9 \\
+\quad + StreamKV & 0.5 fps & -- & 68.8 \\
+\quad \textbf{+ MEMO} & 1 fps & 66.6 & 73.2 \\
+Qwen2.5-VL-7B & 1 fps & 59.9 & 73.3 \\
+\quad + FluxMem & 1 fps & 67.2 & 76.4 \\
+\quad \textbf{+ MEMO} & 1 fps & 66.9 & 78.5 \\
+Qwen3-VL-8B & 1 fps & 70.1 & 73.2 \\
+\quad \textbf{+ MEMO} & 1 fps & \textbf{76.0} & \textbf{83.7} \\
+\hline
+\end{tabular}
+\end{table*}
