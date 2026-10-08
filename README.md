@@ -11,7 +11,7 @@ ACM Multimedia 2026 · [Paper](https://arxiv.org/abs/2609.38900) · [Citation](C
 MEMO is a training-free memory framework for streaming video understanding. It segments a video into semantic chunks using global, entity, and spatial cues, then retrieves visual evidence for each question.
 
 <p align="center">
-  <a href="assets/teaser.png"><img src="assets/teaser.png" alt="Comparison of streaming video memory paradigms" width="100%"></a>
+  <a href="assets/teaser.png"><img src="assets/teaser.png" alt="Comparison of streaming video memory paradigms" width="80%"></a>
 </p>
 <p align="center"><em>MEMO keeps lightweight retrieval indices separate from high-resolution visual evidence.</em></p>
 
