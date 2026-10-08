@@ -9,7 +9,7 @@ python -m pip install --upgrade pip setuptools wheel
 python -m pip install torch==2.10.0 torchvision==0.25.0 \
   --index-url https://download.pytorch.org/whl/cu128
 SAM2_BUILD_CUDA=0 python -m pip install --no-build-isolation -r requirements.txt
-CUDA_VISIBLE_DEVICES=0 python scripts/doctor.py
+CUDA_VISIBLE_DEVICES=0 python -m memo.scripts.doctor
 ```
 
 The CUDA 12.8 wheels need a compatible driver. `SAM2_BUILD_CUDA=0` skips SAM2's optional CUDA extension; small-hole or small-region postprocessing may be skipped. FlashAttention and a separate GroundingDINO installation are not required.

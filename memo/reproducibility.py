@@ -13,7 +13,7 @@ def sha256(path):
     return digest.hexdigest()
 
 def manifest(args, config, groups):
-    root=Path(__file__).resolve().parent
+    root=Path(__file__).resolve().parents[1]
     packages={}
     for name in ('torch','torchvision','transformers','accelerate','qwen-vl-utils','numpy','Pillow','opencv-python','decord','av','hydra-core','iopath','SAM-2'):
         try: packages[name]=metadata.version(name)

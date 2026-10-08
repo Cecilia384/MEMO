@@ -20,8 +20,8 @@ from dataclasses import dataclass, field
 from typing import Optional
 from collections import deque
 
-from stage2.stage1_perception_gpu import FramePerception, PerceptionLayer
-from stage2.stage2_similarity_gpu import SimilarityCalculator, SimilarityResult, SimilarityConfig
+from memo.stage2.stage1_perception_gpu import FramePerception, PerceptionLayer
+from memo.stage2.stage2_similarity_gpu import SimilarityCalculator, SimilarityResult, SimilarityConfig
 
 
 def sync_time() -> float:

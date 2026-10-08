@@ -5,9 +5,9 @@ import numpy as np
 import torch
 from PIL import Image
 from transformers import LogitsProcessor
-from benchmarks.data import prompt
-from eval.frame_selection import dual_budget, uniform_sample
-from stage1.frame_extractor import FrameExtractor
+from memo.benchmarks.data import prompt
+from memo.eval.frame_selection import dual_budget, uniform_sample
+from memo.stage1.frame_extractor import FrameExtractor
 
 class TokenClock(LogitsProcessor):
     def __init__(self): self.times=[]
@@ -47,8 +47,8 @@ class Processor:
         if self.cfg['profile']: torch.cuda.synchronize()
 
     def process(self, video_path, questions, record):
-        from stage2.stage2_similarity_gpu import SimilarityConfig
-        from stage2.stage3_segmentation_gpu import SegmentationConfig, StreamingSceneSegmenter
+        from memo.stage2.stage2_similarity_gpu import SimilarityConfig
+        from memo.stage2.stage3_segmentation_gpu import SegmentationConfig, StreamingSceneSegmenter
         c=self.cfg
         extractor=FrameExtractor(fps=c['target_fps'],backend='decord',anchor_end=False)
         video=extractor.extract(video_path)

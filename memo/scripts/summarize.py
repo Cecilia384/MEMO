@@ -3,11 +3,9 @@
 import argparse
 import csv
 import json
-import sys
 from pathlib import Path
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from benchmarks.scoring import score_answer, summarize
-from benchmarks.data import load_questions
+from memo.benchmarks.scoring import score_answer, summarize
+from memo.benchmarks.data import load_questions
 
 def validate_result(data):
     if data.get('status')!='completed': raise ValueError('Only completed runs can be summarized')

@@ -1,5 +1,5 @@
 """
-MEMO/eval/shared_components.py
+memo/eval/shared_components.py
 --------------------
 三个数据集测试脚本（OVO-Bench / RVS / StreamingBench）共用的组件：
 
@@ -74,9 +74,9 @@ class StageBackend:
         self.use_gpu = use_gpu
         suffix = "_gpu" if use_gpu else ""
 
-        perception_mod   = self._import(f"stage2.stage1_perception{suffix}")
-        similarity_mod   = self._import(f"stage2.stage2_similarity{suffix}")
-        segmentation_mod = self._import(f"stage2.stage3_segmentation{suffix}")
+        perception_mod   = self._import(f"memo.stage2.stage1_perception{suffix}")
+        similarity_mod   = self._import(f"memo.stage2.stage2_similarity{suffix}")
+        segmentation_mod = self._import(f"memo.stage2.stage3_segmentation{suffix}")
 
         self.CLIPEncoder             = perception_mod.CLIPEncoder
         self.GroundingDINODetector   = perception_mod.GroundingDINODetector
@@ -89,7 +89,7 @@ class StageBackend:
         self.StreamingSceneSegmenter = segmentation_mod.StreamingSceneSegmenter
         self.SegmentationConfig      = segmentation_mod.SegmentationConfig
 
-        s3_pkg = "stage3_gpu" if use_gpu else "stage3"
+        s3_pkg = "memo.stage3_gpu" if use_gpu else "memo.stage3"
         self.build_chunk_store = self._import(f"{s3_pkg}.stage3_storage").build_chunk_store
         self.ChunkRetriever    = self._import(f"{s3_pkg}.stage3_retrieval").ChunkRetriever
         self.ingest_chunk      = self._import(f"{s3_pkg}.stage3_ingestion").ingest_chunk

@@ -10,8 +10,8 @@ class RuntimeTests(TestCase):
         import numpy as np
         import torch
         from transformers import BatchEncoding
-        from configuration import DEFAULTS
-        from eval.reproduction_processor import Processor
+        from memo.configuration import DEFAULTS
+        from memo.eval.reproduction_processor import Processor
         seen=[]
         class Adapter:
             model=SimpleNamespace(generate=lambda **kwargs:torch.tensor([[0,1]]))
@@ -25,7 +25,7 @@ class RuntimeTests(TestCase):
         processor=Processor(config,Adapter(),None,None,None,None,None,None)
         questions=[dict(id=str(i),timestamp=t,question='Color?',options=['A','B'],answer='A',benchmark='custom') for i,t in enumerate([.5,1,None])]
         records=[]
-        with patch('eval.reproduction_processor.FrameExtractor',return_value=extractor):
+        with patch('memo.eval.reproduction_processor.FrameExtractor',return_value=extractor):
             processor.process('fake.mp4',questions,lambda *args:records.append(args))
         self.assertEqual(seen,[[10],[10,20],[10,20,30]])
 
@@ -35,9 +35,9 @@ class RuntimeTests(TestCase):
         import numpy as np
         import torch
         from transformers import BatchEncoding
-        from configuration import DEFAULTS
-        from eval.reproduction_processor import Processor
-        from eval.shared_components import ChunkFrameStore
+        from memo.configuration import DEFAULTS
+        from memo.eval.reproduction_processor import Processor
+        from memo.eval.shared_components import ChunkFrameStore
         seen=[]
         class Adapter:
             model=SimpleNamespace(generate=lambda **kwargs:torch.tensor([[0,1]]))
@@ -66,7 +66,7 @@ class RuntimeTests(TestCase):
         extractor=SimpleNamespace(extract=lambda _:video,get_video_info=lambda _:SimpleNamespace(duration=3))
         processor=Processor(dict(DEFAULTS),Adapter(),perception,store,retriever,text,ChunkFrameStore(),SimpleNamespace(ingest_chunk=ingest))
         qs=[dict(id=str(i),timestamp=t,question='Color?',options=['A','B'],answer='A',benchmark='custom') for i,t in enumerate([.5,1.5,None])]
-        with patch('eval.reproduction_processor.FrameExtractor',return_value=extractor), patch('stage2.stage3_segmentation_gpu.StreamingSceneSegmenter',Segmenter):
+        with patch('memo.eval.reproduction_processor.FrameExtractor',return_value=extractor), patch('memo.stage2.stage3_segmentation_gpu.StreamingSceneSegmenter',Segmenter):
             processor.process('fake.mp4',qs,lambda *args:None)
         self.assertEqual(seen,[[10],[10,20],[10,20,30]])
 
@@ -76,9 +76,8 @@ class RuntimeTests(TestCase):
 class VideoSamplingTests(TestCase):
     def test_decord_sample_indices_match_reference_video(self):
         from pathlib import Path
-        from stage1.frame_extractor import FrameExtractor
-        video_path = Path(__file__).resolve().parents[1] / 'examples/synthetic/sample_0_real.mp4'
+        from memo.stage1.frame_extractor import FrameExtractor
+        video_path = Path(__file__).resolve().parents[2] / 'examples/synthetic/sample_0_real.mp4'
         result = FrameExtractor(fps=1.0, backend='decord').extract(str(video_path))
         self.assertEqual(result.native_indices, [0, 9, 18, 27, 36, 45, 54, 63])
         self.assertEqual(len(result.frames), 8)
-

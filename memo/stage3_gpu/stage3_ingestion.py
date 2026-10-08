@@ -25,9 +25,9 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-# stage2 类型（调用方负责 sys.path 正确）
-from stage2.stage3_segmentation_gpu import SemanticChunk
-from stage2.stage2_similarity_gpu import SimilarityCalculator
+# Stage 2 types
+from memo.stage2.stage3_segmentation_gpu import SemanticChunk
+from memo.stage2.stage2_similarity_gpu import SimilarityCalculator
 
 from .stage3_storage import ChunkStore
 

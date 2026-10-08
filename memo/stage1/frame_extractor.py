@@ -8,8 +8,8 @@ import cv2
 import numpy as np
 import torch
 
-from stage1.data_types import Frame, VideoFrames, VideoInfo
-from stage1.sampling import build_sample_indices, calculate_video_frame_range
+from memo.stage1.data_types import Frame, VideoFrames, VideoInfo
+from memo.stage1.sampling import build_sample_indices, calculate_video_frame_range
 
 logger = logging.getLogger(__name__)
 

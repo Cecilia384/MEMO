@@ -4,11 +4,11 @@ import json
 import logging
 import random
 from pathlib import Path
-from configuration import load_config, parse_args
-from benchmarks.data import load_questions
-from benchmarks.scoring import score_answer, summarize
-from reproducibility import manifest
-from eval.output import save_output
+from memo.configuration import load_config, parse_args
+from memo.benchmarks.data import load_questions
+from memo.benchmarks.scoring import score_answer, summarize
+from memo.reproducibility import manifest
+from memo.eval.output import save_output
 
 def main():
     args=parse_args()
@@ -29,8 +29,8 @@ def main():
     try:
         import numpy as np
         import torch
-        from eval.shared_components import StageBackend, RetrievalCLIPEncoder, ChunkFrameStore, build_model_adapter
-        from eval.reproduction_processor import Processor
+        from memo.eval.shared_components import StageBackend, RetrievalCLIPEncoder, ChunkFrameStore, build_model_adapter
+        from memo.eval.reproduction_processor import Processor
         if not torch.cuda.is_available(): raise RuntimeError('A CUDA GPU is required')
         if torch.cuda.device_count()!=1:
             raise RuntimeError('Expose exactly one GPU with CUDA_VISIBLE_DEVICES for reproducible device placement')

@@ -32,7 +32,7 @@ import torch.nn.functional as F
 from dataclasses import dataclass
 from typing import Optional, List, Dict, Any, Tuple
 
-from stage3_gpu.stage3_storage import ChunkStore, ChunkMeta, GPUChunkIndex, CPUTokenPool
+from memo.stage3_gpu.stage3_storage import ChunkStore, ChunkMeta, GPUChunkIndex, CPUTokenPool
 
 
 # ---------------------------------------------------------------------------

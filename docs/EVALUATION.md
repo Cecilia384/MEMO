@@ -7,14 +7,14 @@ The main experiments use StreamingBench real-time and OVO-Bench real-time. Prepa
 StreamingBench example:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python reproduce.py \
+CUDA_VISIBLE_DEVICES=0 python -m memo.reproduce \
   --config configs/main/streamingbench_qwen3.json \
   --annotations data/streamingbench/Real_Time_Visual_Understanding.csv \
   --video-root data/streamingbench/videos \
   --model-path weights/Qwen3-VL-8B-Instruct \
   --output results/streamingbench_qwen3.json
 
-python scripts/summarize.py results/streamingbench_qwen3.json \
+python -m memo.scripts.summarize results/streamingbench_qwen3.json \
   --annotations data/streamingbench/Real_Time_Visual_Understanding.csv \
   --video-root data/streamingbench/videos \
   --output-dir results/streamingbench_qwen3_report
@@ -23,14 +23,14 @@ python scripts/summarize.py results/streamingbench_qwen3.json \
 OVO-Bench example:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python reproduce.py \
+CUDA_VISIBLE_DEVICES=0 python -m memo.reproduce \
   --config configs/main/ovobench_qwen3.json \
   --annotations data/ovobench/ovo_bench_new.json \
   --video-root data/ovobench \
   --model-path weights/Qwen3-VL-8B-Instruct \
   --output results/ovobench_qwen3.json
 
-python scripts/summarize.py results/ovobench_qwen3.json \
+python -m memo.scripts.summarize results/ovobench_qwen3.json \
   --annotations data/ovobench/ovo_bench_new.json \
   --video-root data/ovobench \
   --output-dir results/ovobench_qwen3_report
@@ -41,7 +41,7 @@ For another backbone, change the configuration and `--model-path` together. The 
 To preview all four models for one benchmark, run:
 
 ```bash
-python scripts/run_main_table.py \
+python -m memo.scripts.run_main_table \
   --benchmark streamingbench \
   --annotations data/streamingbench/Real_Time_Visual_Understanding.csv \
   --video-root data/streamingbench/videos \
@@ -57,7 +57,7 @@ For a quick diagnostic, add `--max-videos 1 --max-questions-per-video 2`. Such o
 Use `configs/profiling/streamingbench_qwen25.json` with StreamingBench annotations and Qwen2.5 weights. Then run:
 
 ```bash
-python scripts/profile_report.py results/profile_qwen25.json \
+python -m memo.scripts.profile_report results/profile_qwen25.json \
   --warmup-questions 1 --output results/profile_report.json
 ```
 
@@ -67,6 +67,6 @@ Profiling serializes perception modules and synchronizes token timestamps. It re
 
 Results include configuration, selected question IDs, source and annotation hashes, dependency versions, model metadata hashes, GPU information, answers, frame counts, and scores. Model weight and video bytes are not hashed automatically; preserve their exact versions separately.
 
-The runner saves results atomically after each question, never overwrites an existing output, and does not resume an interrupted run. For a complete report, `status` must be `completed` with exactly the expected question IDs. Pass the original annotations to `scripts/summarize.py` to verify ID coverage.
+The runner saves results atomically after each question, never overwrites an existing output, and does not resume an interrupted run. For a complete report, `status` must be `completed` with exactly the expected question IDs. Pass the original annotations to `python -m memo.scripts.summarize` to verify ID coverage.
 
 The report exports JSON, CSV, and LaTeX. StreamingBench uses micro accuracy across questions; OVO real-time uses the mean of six task accuracies. The main configurations use the supplied development scorers' permissive `legacy` rules; [Protocol and Provenance](PROTOCOL.md) describes them and the optional `strict` mode. Published targets in `configs/paper_targets.json` are never loaded as predictions.

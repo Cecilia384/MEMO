@@ -4,12 +4,12 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from benchmarks.data import load_questions, prompt, timestamp
-from benchmarks.scoring import score_answer, summarize
-from configuration import DEFAULTS, load_config
-from dataset import validate_records
-from eval.frame_selection import dual_budget
-from scripts.summarize import validate_result
+from memo.benchmarks.data import load_questions, prompt, timestamp
+from memo.benchmarks.scoring import score_answer, summarize
+from memo.configuration import DEFAULTS, load_config
+from memo.dataset import validate_records
+from memo.eval.frame_selection import dual_budget
+from memo.scripts.summarize import validate_result
 
 class ReleaseTests(unittest.TestCase):
     def setUp(self):
@@ -73,7 +73,7 @@ class ReleaseTests(unittest.TestCase):
         for data in ({'status':'failed'},dict(status='completed',results=[],expected_questions=1)):
             with self.assertRaises(ValueError): validate_result(data)
     def test_all_shipped_configs_validate(self):
-        root=Path(__file__).resolve().parents[1]/'configs'
+        root=Path(__file__).resolve().parents[2]/'configs'
         for p in root.rglob('*.json'):
             if p.name!='paper_targets.json': load_config(p)
 

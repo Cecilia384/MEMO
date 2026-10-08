@@ -75,7 +75,7 @@ def read_records(path, benchmark):
     raise ValueError(f'Unknown benchmark: {benchmark}')
 
 def load_questions(path, video_root, benchmark, tasks=None, max_videos=0, max_questions=0):
-    from dataset import validate_records
+    from memo.dataset import validate_records
     records = read_records(path, benchmark)
     if tasks:
         allowed = set(STREAMING_TASKS if benchmark == 'streamingbench' else OVO_TASKS)
@@ -98,5 +98,5 @@ def prompt(q):
         return ('\nQuestion: ' + q['question'] + '\nOptions:\n' + options + '\n\n'
                 'Respond only with the letter corresponding to your chosen option (e.g., A, B, C). \n'
                 'Do not include any additional text or explanation in your response.\n')
-    from dataset import build_prompt
+    from memo.dataset import build_prompt
     return build_prompt(q)

@@ -71,7 +71,7 @@ Inference requires Linux, Python 3.10, one NVIDIA CUDA GPU, and model weights. S
 Validate the synthetic example without loading models:
 
 ```bash
-python reproduce.py \
+python -m memo.reproduce \
   --config configs/smoke.json \
   --annotations examples/synthetic/custom.json \
   --video-root examples/synthetic \
@@ -81,7 +81,7 @@ python reproduce.py \
 Run it with Qwen3-VL-8B:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python reproduce.py \
+CUDA_VISIBLE_DEVICES=0 python -m memo.reproduce \
   --config configs/smoke.json \
   --annotations examples/synthetic/custom.json \
   --video-root examples/synthetic \
@@ -95,11 +95,10 @@ Benchmark configs are in `configs/main/` (four backbones × two benchmarks). See
 
 | Path | Purpose |
 | --- | --- |
-| `reproduce.py`, `configs/` | Experiment entry point and configurations |
-| `benchmarks/`, `stage1/` | Annotation readers and sampled video decoding |
-| `stage2/`, `stage3_gpu/` | Perception, chunking, and memory retrieval |
-| `eval/`, `scripts/` | Model adapters, temporal evaluation, and reports |
-| `docs/`, `tests/` | Protocol details and validation |
+| `memo/` | Inference, benchmarks, utilities, and tests |
+| `configs/` | Experiment configurations |
+| `examples/`, `assets/` | Sample data and figures |
+| `docs/` | Setup, evaluation, and validation guides |
 
 ## Citation and License
 

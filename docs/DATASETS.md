@@ -15,7 +15,7 @@ Pass the native `Real_Time_Visual_Understanding.csv` file. Required columns:
 | `answer` | Option letter |
 | `options` | Python/JSON-style list of strings, such as `['A. Red', 'B. Blue']` |
 
-Supported task order: OP, CR, CS, ATP, EU, TR, PR, SU, ACP, CT. Full names are defined in `benchmarks/data.py`, including the dataset spelling `Clips Summarize`.
+Supported task order: OP, CR, CS, ATP, EU, TR, PR, SU, ACP, CT. Full names are defined in `memo/benchmarks/data.py`, including the dataset spelling `Clips Summarize`.
 
 The standard video mapping is `sample_<id>_real.mp4` under `--video-root`. An optional `video` CSV column overrides this mapping for repackaged data. Option strings are passed to the prompt unchanged, so retain their original labels. The loader uses `ast.literal_eval`, never executable `eval`.
 

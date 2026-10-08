@@ -2,9 +2,13 @@
 
 Date: September 30, 2026.
 
+## October 8, 2026 package layout check
+
+After moving Python code into `memo/`, all 14 tests passed in `streamingkfs`. The Qwen3-VL-8B synthetic video run completed on an RTX A6000 with three answers; its result also passed independent summary generation. Full benchmarks were not rerun for this layout change.
+
 ## October 8, 2026 modular cleanup check
 
-The legacy `run_eval.py` entry point and its processor classes, the disabled prefilter and perception cache, and unused video-reader backends were removed. The fixed decord path now uses `stage1/sampling.py`, while result persistence lives in `eval/output.py`. All 19 distributed run/example configurations retain the same values apart from the two disabled prefilter fields.
+The legacy `run_eval.py` entry point and its processor classes, the disabled prefilter and perception cache, and unused video-reader backends were removed. The fixed decord path now uses `memo/stage1/sampling.py`, while result persistence lives in `memo/eval/output.py`. All 19 distributed run/example configurations retain the same values apart from the two disabled prefilter fields.
 
 The `streamingkfs` environment passed all 14 automated tests, including a new video sampling check. Decoding the bundled synthetic video and a 448-frame StreamingBench sample produced the same frame counts, first ten native indices, and SHA256 of concatenated RGB frame bytes before and after cleanup. All four backbones completed two-question MEMO runs on each real-time benchmark: eight completed runs with two nonempty answers each. `scripts/summarize.py --allow-subset` generated both reports and verified exact question IDs against the subset annotations. All eight runs preserved their prior question IDs and per-video sampled/processed frame and chunk counts. Seven runs preserved both answer choices; LLaVA 0.5B's second OVO-Bench choice varied, consistent with its earlier sample-level variability. Logs and results are under the ignored local directory `results/verification_cleanup_20261008/`.
 
@@ -35,9 +39,9 @@ These checks do not validate full benchmark accuracy, other model backbones, bas
 ## Commands
 
 ```bash
-python -m unittest discover -s tests -v
-python reproduce.py --help
-python reproduce.py --config configs/smoke.json \
+python -m unittest discover -s memo/tests -v
+python -m memo.reproduce --help
+python -m memo.reproduce --config configs/smoke.json \
   --annotations examples/synthetic/custom.json \
   --video-root examples/synthetic --validate-only
 ```

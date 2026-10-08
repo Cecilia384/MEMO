@@ -6,7 +6,7 @@ import shlex
 import subprocess
 import sys
 
-ROOT=Path(__file__).resolve().parents[1]
+ROOT=Path(__file__).resolve().parents[2]
 MODEL_DIRS={'qwen3':'Qwen3-VL-8B-Instruct','qwen25':'Qwen2.5-VL-7B-Instruct',
             'llava_7b':'llava-onevision-qwen2-7b-ov-hf','llava_05b':'llava-onevision-qwen2-0.5b-ov-hf'}
 def main():
@@ -27,7 +27,7 @@ def main():
         for method in (['main','baselines'] if args.include_baselines else ['main']):
             config=ROOT/'configs'/method/f'{args.benchmark}_{model}.json'
             name=f'{args.benchmark}_{model}_{method}'
-            cmd=[sys.executable,str(ROOT/'reproduce.py'),'--config',str(config),'--output',str(out/(name+'.json')),
+            cmd=[sys.executable,'-m','memo.reproduce','--config',str(config),'--output',str(out/(name+'.json')),
                  '--annotations',str(Path(args.annotations).resolve()),'--video-root',str(Path(args.video_root).resolve()),
                  '--model-path',str(weights/MODEL_DIRS[model]),'--clip-path',str(weights/'clip-vit-large-patch14'),
                  '--gdino-path',str(weights/'grounding-dino-base'),'--sam2-ckpt',str(weights/'sam2.1_hiera_large.pt')]

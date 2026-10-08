@@ -19,7 +19,7 @@ import torch.nn.functional as F
 from dataclasses import dataclass
 from typing import Optional
 
-from stage2.stage1_perception_gpu import FramePerception
+from memo.stage2.stage1_perception_gpu import FramePerception
 
 
 def _to_device_tensor(t: Optional[torch.Tensor], device: str, dtype: Optional[torch.dtype] = None) -> Optional[torch.Tensor]:

@@ -1,7 +1,7 @@
 """Explicit benchmark aggregation; never substitute paper targets for measurements."""
 from collections import defaultdict
-from dataset import parse_choice
-from benchmarks.data import STREAMING_TASKS, OVO_TASKS
+from memo.dataset import parse_choice
+from memo.benchmarks.data import STREAMING_TASKS, OVO_TASKS
 
 def score_answer(q, response, protocol):
     choice = parse_choice(response, q['options']) if q['options'] else None
