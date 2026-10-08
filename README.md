@@ -10,10 +10,10 @@ ACM Multimedia 2026 · [Paper](https://arxiv.org/abs/2609.38900) · [Citation](C
 
 MEMO is a training-free memory framework for streaming video understanding. It segments a video into semantic chunks using global, entity, and spatial cues, then retrieves visual evidence for each question.
 
-<!-- Replace the placeholder with:
-<p align="center"><img src="assets/teaser.png" alt="MEMO teaser" width="900"></p>
--->
-<p align="center"><em>Teaser figure placeholder · assets/teaser.png</em></p>
+<p align="center">
+  <a href="assets/teaser.png"><img src="assets/teaser.png" alt="Comparison of streaming video memory paradigms" width="100%"></a>
+</p>
+<p align="center"><em>MEMO keeps lightweight retrieval indices separate from high-resolution visual evidence.</em></p>
 
 ## Overview
 
@@ -21,10 +21,10 @@ MEMO is a training-free memory framework for streaming video understanding. It s
 - **Online memory:** adaptive chunks retain lightweight retrieval indices on GPU and visual evidence on CPU.
 - **Question answering:** the top 3 historical chunks and the current chunk supply up to 8 + 8 frames to an MLLM.
 
-<!-- Replace the placeholder with:
-<p align="center"><img src="assets/pipeline.png" alt="MEMO pipeline" width="900"></p>
--->
-<p align="center"><em>Pipeline figure placeholder · assets/pipeline.png</em></p>
+<p align="center">
+  <a href="assets/pipeline.png"><img src="assets/pipeline.png" alt="MEMO pipeline: perception, chunking, memory, and retrieval" width="100%"></a>
+</p>
+<p align="center"><em>MEMO processes incoming frames, builds structured memory, and retrieves evidence for each query.</em></p>
 
 ## Main Results
 
