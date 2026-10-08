@@ -1,0 +1,6 @@
+{
+  "custom_questions": 3,
+  "streamingbench_questions": 2,
+  "ovobench_questions": 2,
+  "purpose": "Execution and schema checks only; not a benchmark score or an exact model-output fixture."
+}

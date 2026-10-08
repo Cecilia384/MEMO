@@ -1,0 +1,15 @@
+# Python 3.10; install the CUDA PyTorch wheels first (see README.md).
+torch==2.10.0
+torchvision==0.25.0
+transformers==5.9.0
+accelerate==1.13.0
+qwen-vl-utils==0.0.14
+numpy==2.2.6
+Pillow==12.1.1
+opencv-python==4.13.0.92
+decord==0.6.0
+av==16.1.0
+hydra-core==1.3.2
+iopath==0.1.10
+# Install with SAM2_BUILD_CUDA=0 and --no-build-isolation for the minimal setup.
+SAM-2 @ git+https://github.com/facebookresearch/sam2.git@2b90b9f5ceec907a1c18123530e92e794ad901a4

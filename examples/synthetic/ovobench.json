@@ -1,0 +1,26 @@
+[
+  {
+    "id": "early",
+    "task": "ATR",
+    "video": "sample_0_real.mp4",
+    "realtime": 0.5,
+    "question": "What color is the square?",
+    "options": [
+      "Red",
+      "Blue"
+    ],
+    "gt": 0
+  },
+  {
+    "id": "late",
+    "task": "ATR",
+    "video": "sample_0_real.mp4",
+    "realtime": 4.5,
+    "question": "What color is the square now?",
+    "options": [
+      "Red",
+      "Blue"
+    ],
+    "gt": 1
+  }
+]

@@ -1,0 +1,3 @@
+question_id,task_type,question,time_stamp,answer,options
+example_sample_0_q0,Attribute Perception,What color is the square?,0.5,A,"['A. Red', 'B. Blue']"
+example_sample_0_q1,Attribute Perception,What color is the square now?,4.5,B,"['A. Red', 'B. Blue']"

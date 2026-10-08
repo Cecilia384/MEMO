@@ -1,0 +1,26 @@
+{
+  "description": "Historical SHA256 of supplied local source files before release-specific changes. Some paths were removed during cleanup; entries remain as provenance. Paths are relative to their source project; this is not a git commit.",
+  "files": {
+    "dataset.py": "923d8e655337236b13ba08f548205fbd63f6724483090a8e60fbe768db67f1c5",
+    "eval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "eval/custom_processor.py": "bf76184feff53ad7dd4f747182f84bbbee87ad2995fc09746955217754aceaa3",
+    "eval/shared_components.py": "8e52a11f52bac259a9cd69c6b9974379a7d8641bf01bd613dbb5150e58f0806b",
+    "eval/video_processor_base.py": "4b288f2f5224e80b30cb91d48c0c130f4190dac6099a57f0e4480de41c35c13c",
+    "requirements.txt": "34efd9c3ff745171921a52d6ba232a810564d78b83b4b87171d29409f9e29264",
+    "run_eval.py": "0fccf9b630f56d8ad6d95037d95e9bb360181d8872e547c3a1775fcf0c9b3031",
+    "stage1/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "stage1/data_types.py": "59a1ee96d76a4e7b2de1bfba2fb6e7dd767e42a782b91aa8506ada8b3fb2a7c5",
+    "stage1/frame_extractor.py": "1c00942e7bfe68adc5dd38642214aabbc3e1d448dd59b6cfd2309ac22b16546a",
+    "stage1/frame_filter.py": "679fd222ef4596c97bcb767ccd745499633c23c8f0d009cd3b82a4cde7e8a21c",
+    "stage1/video_reader.py": "ce059f7c95f31b9f58e38e8e7c3c2aaef991f2940a3874502a3611ecb3686c29",
+    "stage2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stage2/frame_perception_cache.py": "c2a620e385701b671993c3e3c27e48537ab242bf4ae20bbe9174a301348b8d95",
+    "stage2/stage1_perception_gpu.py": "383c735e0de96832e025cf0e036a17161c9bdc92a7c284e3af03483974fa0ca8",
+    "stage2/stage2_similarity_gpu.py": "4dbc04100256e34969ca1c30727cce7ea5bae808b63a02c3af3a39a0ed7dac62",
+    "stage2/stage3_segmentation_gpu.py": "56c3c88c4db5672471af67a71c8e9a3d143488a02fbcfeb90645f6d1e4a6a60e",
+    "stage3_gpu/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stage3_gpu/stage3_ingestion.py": "47e8657f05d8a4555bfe44a1c1b1d70a09014bba01d1049e145eac551b17cebd",
+    "stage3_gpu/stage3_retrieval.py": "af899a68a2e2c6be003ecfe1b2ca29eed8926b4861ec50f43ba7524fd44d9568",
+    "stage3_gpu/stage3_storage.py": "96253bff356e857f9ba462a294dedd2c0ed760ce0ed82844216232cc25988723"
+  }
+}

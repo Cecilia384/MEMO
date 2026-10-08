@@ -1,0 +1,122 @@
+{
+  "scope": "Synthetic execution checks only. These are not benchmark measurements or exact-output expectations.",
+  "date": "2026-09-30",
+  "runs": [
+    {
+      "name": "custom_synthetic",
+      "status": "completed",
+      "questions": 3,
+      "gpu": {
+        "name": "NVIDIA RTX A6000",
+        "cuda": "12.8",
+        "total_bytes": 51033931776
+      },
+      "packages": {
+        "torch": "2.10.0",
+        "torchvision": "0.25.0",
+        "transformers": "5.9.0",
+        "accelerate": "1.13.0",
+        "qwen-vl-utils": "0.0.14",
+        "numpy": "2.2.6",
+        "Pillow": "12.1.1",
+        "opencv-python": "4.13.0.92",
+        "decord": "0.6.0",
+        "av": "16.1.0",
+        "hydra-core": "1.3.2",
+        "iopath": "0.1.10",
+        "SAM-2": "1.0"
+      },
+      "results": [
+        {
+          "id": "early",
+          "prediction": "A",
+          "choice": "A",
+          "correct": true,
+          "evidence": {
+            "total_frames": 1,
+            "retrieved_chunks": [],
+            "history_available": 0,
+            "current_available": 1
+          }
+        },
+        {
+          "id": "late",
+          "prediction": "B",
+          "choice": "B",
+          "correct": true,
+          "evidence": {
+            "total_frames": 5,
+            "retrieved_chunks": [],
+            "history_available": 0,
+            "current_available": 5
+          }
+        },
+        {
+          "id": "full",
+          "prediction": "Based on the sequence of frames provided, the square undergoes a color change.\n\n- The first four frames (frames 1-4) show a solid red",
+          "choice": null,
+          "correct": null,
+          "evidence": {
+            "total_frames": 8,
+            "retrieved_chunks": [
+              0
+            ],
+            "history_available": 8,
+            "current_available": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "streamingbench_format_synthetic_profile",
+      "status": "completed",
+      "questions": 2,
+      "gpu": {
+        "name": "NVIDIA RTX A6000",
+        "cuda": "12.8",
+        "total_bytes": 51033931776
+      },
+      "packages": {
+        "torch": "2.10.0",
+        "torchvision": "0.25.0",
+        "transformers": "5.9.0",
+        "accelerate": "1.13.0",
+        "qwen-vl-utils": "0.0.14",
+        "numpy": "2.2.6",
+        "Pillow": "12.1.1",
+        "opencv-python": "4.13.0.92",
+        "decord": "0.6.0",
+        "av": "16.1.0",
+        "hydra-core": "1.3.2",
+        "iopath": "0.1.10",
+        "SAM-2": "1.0"
+      },
+      "results": [
+        {
+          "id": "example_sample_0_q0",
+          "prediction": "A",
+          "choice": "A",
+          "correct": true,
+          "evidence": {
+            "total_frames": 1,
+            "retrieved_chunks": [],
+            "history_available": 0,
+            "current_available": 1
+          }
+        },
+        {
+          "id": "example_sample_0_q1",
+          "prediction": "B",
+          "choice": "B",
+          "correct": true,
+          "evidence": {
+            "total_frames": 5,
+            "retrieved_chunks": [],
+            "history_available": 0,
+            "current_available": 5
+          }
+        }
+      ]
+    }
+  ]
+}

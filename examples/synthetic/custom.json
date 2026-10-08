@@ -1,0 +1,30 @@
+[
+  {
+    "id": "early",
+    "video": "sample_0_real.mp4",
+    "timestamp": 0.5,
+    "question": "What color is the square?",
+    "options": [
+      "Red",
+      "Blue"
+    ],
+    "answer": "A"
+  },
+  {
+    "id": "late",
+    "video": "sample_0_real.mp4",
+    "timestamp": 4.5,
+    "question": "What color is the square now?",
+    "options": [
+      "Red",
+      "Blue"
+    ],
+    "answer": "B"
+  },
+  {
+    "id": "full",
+    "video": "sample_0_real.mp4",
+    "timestamp": null,
+    "question": "Describe how the square changes color."
+  }
+]

@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "Please cite the MEMO paper when using this implementation."
+type: software
+title: "MEMO: Multi-Level Entity-Aware Memory for Streaming Video Understanding"
+authors:
+  - family-names: Li
+    given-names: Yinying
+  - family-names: Fu
+    given-names: Yuqian
+  - family-names: Dai
+    given-names: Yulin
+  - family-names: Gong
+    given-names: Jingyu
+  - family-names: Qian
+    given-names: Tianwen
+  - family-names: Wang
+    given-names: Xiaoling
+version: 0.1.0-rc1
+license: MIT
+preferred-citation:
+  type: article
+  title: "MEMO: Multi-Level Entity-Aware Memory for Streaming Video Understanding"
+  authors:
+    - family-names: Li
+      given-names: Yinying
+    - family-names: Fu
+      given-names: Yuqian
+    - family-names: Dai
+      given-names: Yulin
+    - family-names: Gong
+      given-names: Jingyu
+    - family-names: Qian
+      given-names: Tianwen
+    - family-names: Wang
+      given-names: Xiaoling
+  year: 2026
+  doi: 10.48550/arXiv.2609.38900
+  url: "https://arxiv.org/abs/2609.38900"
