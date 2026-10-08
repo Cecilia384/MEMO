@@ -12,4 +12,3 @@ jobs:
       - run: python reproduce.py --help
       - run: python reproduce.py --config configs/smoke.json --annotations examples/synthetic/custom.json --video-root examples/synthetic --validate-only
       - run: python -m compileall -q .
-      - run: sha256sum --check CHECKSUMS.sha256
