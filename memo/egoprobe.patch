@@ -1,0 +1,167 @@
+--- a/evaluation/adapters/memo/native.py
++++ b/evaluation/adapters/memo/native.py
+@@ -1,36 +1,39 @@
+-"""Load the supplied source unchanged, fail closed on generic import collisions."""
++"""Load the current MEMO package selected by the run config."""
+ import hashlib
+ import importlib
+-import json
+ from pathlib import Path
+ import sys
+ 
+ 
+ def verify(root):
+     root = Path(root).resolve()
+-    manifest = json.loads(Path(__file__).with_name('upstream.json').read_text())
+-    for name, expected in manifest['sha256'].items():
+-        if hashlib.sha256((root / name).read_bytes()).hexdigest() != expected:
+-            raise ValueError(f'MEMO source changed; re-audit adapter: {name}')
+-    return root, manifest['sha256']
++    if root.name != 'memo' or not (root / '__init__.py').is_file():
++        raise ValueError(f'Expected the current MEMO package directory: {root}')
++    files = sorted(root.rglob('*.py'))
++    if not files:
++        raise ValueError(f'No MEMO Python sources found: {root}')
++    hashes = {str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest()
++              for path in files}
++    return root, hashes
+ 
+ 
+ def load(root):
+     root, hashes = verify(root)
+     for key, module in list(sys.modules.items()):
+-        if key.split('.')[0] in ('dataset', 'eval', 'stage1', 'stage2', 'stage3_gpu'):
++        if key == 'memo' or key.startswith('memo.'):
+             locations = ([getattr(module, '__file__', None)] + list(getattr(module, '__path__', [])))
+             if not any(locations) or any(p and not Path(p).resolve().is_relative_to(root) for p in locations):
+                 raise RuntimeError(f'MEMO import collision: {key}; run in a dedicated process')
+-    if str(root) not in sys.path:
+-        sys.path.insert(0, str(root))
+-    shared = importlib.import_module('eval.shared_components')
++    repo = str(root.parent)
++    if repo not in sys.path:
++        sys.path.insert(0, repo)
++    shared = importlib.import_module('memo.eval.shared_components')
+     backend = shared.StageBackend(use_gpu=True)
+-    perception = importlib.import_module('stage2.stage1_perception_gpu')
+-    similarity = importlib.import_module('stage2.stage2_similarity_gpu')
+-    segmentation = importlib.import_module('stage2.stage3_segmentation_gpu')
+-    storage = importlib.import_module('stage3_gpu.stage3_storage')
++    perception = importlib.import_module('memo.stage2.stage1_perception_gpu')
++    similarity = importlib.import_module('memo.stage2.stage2_similarity_gpu')
++    segmentation = importlib.import_module('memo.stage2.stage3_segmentation_gpu')
++    storage = importlib.import_module('memo.stage3_gpu.stage3_storage')
+     classes = {c.__name__: c for module in (perception, similarity, segmentation, storage)
+                for c in vars(module).values()
+                if isinstance(c, type) and hasattr(c, '__dataclass_fields__')}
+-    return backend, shared, importlib.import_module('eval.custom_processor'), classes, hashes
++    return backend, shared, importlib.import_module('memo.eval.frame_selection'), classes, hashes
+--- a/evaluation/adapters/memo/settings.py
++++ b/evaluation/adapters/memo/settings.py
+@@ -1,4 +1,4 @@
+-"""Defaults from the supplied MEMO Minimal, not the paper's experiments."""
++"""Defaults for the current MEMO release and EgoProbe stream reader."""
+ import copy
+ 
+ DEFAULTS = {
+@@ -6,7 +6,8 @@
+     'max_pixels': None, 'max_new_tokens': 64, 'seed': 42,
+     'clip_checkpoint_path': None, 'gdino_checkpoint_path': None,
+     'sam2_checkpoint_path': None,
+-    'memo': {'sample_fps': 1.0, 'top_k': 3, 'max_llm_frames': 8,
++    'detection_prompt': 'person . car . animal . object .',
++    'memo': {'sample_fps': 1.0, 'top_k': 3, 'history_frames': 8, 'current_frames': 8,
+              'cpu_max_size': 512, 'max_store_frames': 2048,
+              'sam2_cfg': 'configs/sam2.1/sam2.1_hiera_l.yaml'},
+ }
+@@ -30,12 +31,14 @@
+         raise ValueError('MEMO seed must be nonnegative integer')
+     if type(m['max_new_tokens']) is not int or m['max_new_tokens'] < 1:
+         raise ValueError('MEMO max_new_tokens must be positive')
++    if not isinstance(m['detection_prompt'], str) or not m['detection_prompt'].strip():
++        raise ValueError('MEMO detection_prompt must be nonempty')
+     if m['memo']['sample_fps'] != 1.0:
+         raise ValueError('MEMO v1 fixes observation at native default 1 FPS')
+     mode = m['memo'].get('reader_mode', 'eager_rgb')
+     if mode not in ('eager_rgb', 'lazy_rgb'):
+         raise ValueError('MEMO reader_mode must be eager_rgb or lazy_rgb')
+-    for k in ('top_k', 'max_llm_frames', 'cpu_max_size', 'max_store_frames'):
++    for k in ('top_k', 'history_frames', 'current_frames', 'cpu_max_size', 'max_store_frames'):
+         if type(m['memo'][k]) is not int or m['memo'][k] < 1:
+             raise ValueError(f'MEMO {k} must be a positive integer')
+     if not isinstance(m['memo']['sam2_cfg'], str) or not m['memo']['sam2_cfg']:
+--- a/evaluation/adapters/memo/adapter.py
++++ b/evaluation/adapters/memo/adapter.py
+@@ -52,7 +52,8 @@
+         detector = b.GroundingDINODetector(weights_path=config['gdino_checkpoint_path'], device=str(self.device))
+         tracker = b.SAM2Tracker(checkpoint=config['sam2_checkpoint_path'],
+                               model_cfg=config['memo']['sam2_cfg'], device=str(self.device))
+-        self.perception = b.PerceptionLayer(self.clip, detector, tracker)
++        self.perception = b.PerceptionLayer(self.clip, detector, tracker,
++                                            text_prompt=config['detection_prompt'])
+         self.model = self.shared.build_model_adapter('qwen3', config['checkpoint_path'],
+                                                      str(self.device), qwen3_mode='image')
+         if any(p.device != self.device for p in self.model.model.parameters()):
+@@ -71,6 +72,7 @@
+         if self._branch:
+             raise ValueError('Cannot reset MEMO inside QA')
+         self.store.clear(); self.frame_store.clear(); self.perception.reset_tracker()
++        self.retriever._rng.seed(self.config['seed'])
+         self.segmenter = self.backend.StreamingSceneSegmenter(
+             self.perception, self.backend.SegmentationConfig(device=str(self.device)))
+         self.frame_cache = {}
+@@ -86,8 +88,9 @@
+         self.backend.ingest_chunk(chunk, similarity_calc=self.segmenter.similarity_calc,
+                                   store=self.store, feat_dim=self.clip.dim)
+         chunk.release_feature_tensors()
++        self.segmenter._completed_chunks.clear()
+         ids = [i for i in sorted(self.frame_cache) if chunk.start_frame <= i <= chunk.end_frame]
+-        self.frame_store.add(self.store.gpu_index.size - 1, [self.frame_cache[i] for i in ids])
++        self.frame_store.add(chunk.chunk_id, [self.frame_cache[i] for i in ids])
+         self.frame_cache = {i: f for i, f in self.frame_cache.items() if i > chunk.end_frame}
+         self.deferred_chunk = None
+ 
+@@ -143,18 +146,15 @@
+         if self.store.gpu_index.size:
+             hits = self.retriever.query_vec(self.retrieval_clip.encode_text(query),
+                                             top_k=self.config['memo']['top_k'], recall_tokens=False)
+-            for hit in sorted(hits, key=lambda h: h.meta.start_frame):
++            for hit in hits:
+                 images = self.frame_store.get(hit.chunk_id)
+                 history.extend(images)
+                 if not images:
+                     missing.append(hit.chunk_id)
+         pending = [self.frame_cache[i] for i in sorted(self.frame_cache)]
+-        budget = self.config['memo']['max_llm_frames']
+-        if history and pending:
+-            recent = min(len(pending), max(1, budget // 2))
+-            frames = self.custom.uniform_sample(history, budget-recent) + self.custom.uniform_sample(pending, recent)
+-        else:
+-            frames = self.custom.uniform_sample(history or pending, budget)
++        frames = self.custom.dual_budget(
++            history, pending,
++            self.config['memo']['history_frames'], self.config['memo']['current_frames'])
+         if not frames:
+             raise ValueError('MEMO has no available visual evidence')
+         self._answer_metadata.update(retrieved_chunk_ids=[h.chunk_id for h in hits],
+@@ -226,7 +226,7 @@
+         return {'adapter': 'memo', 'reader_mode': self.memo_reader_mode,
+                 'source': self.source_hashes, 'checkpoint_codec': checkpoint.VERSION,
+                 'sampling': 'harness_zero_origin_actual_pts_1fps', 'native_indices': 'sample_sequence',
+-                'memory_policy': 'supplied_minimal_defaults_unbounded_index_native_image_eviction',
++                'memory_policy': 'current_memo_dual_frame_budget_native_image_eviction',
+                 'query_boundary': 'native_answer_before_same_frame_ingestion',
+                 'backbone': 'Qwen3-VL-8B-Instruct', 'visual_input': 'native_image_mode',
+                 'versions': {p: importlib.metadata.version(p) for p in ('torch', 'transformers', 'numpy')}}
+--- a/evaluation/reporting/records.py
++++ b/evaluation/reporting/records.py
+@@ -40,7 +40,8 @@
+ def file_inventory(root, suffixes=None):
+     root = Path(root)
+     return {str(p.relative_to(root)): digest(p) for p in sorted(root.rglob('*'))
+-            if p.is_file() and not any(x in ('.git', '.cache', '__pycache__') for x in p.parts)
++            if p.is_file() and not any(x.startswith('.') or x == '__pycache__'
++                                         for x in p.relative_to(root).parts)
+             and (suffixes is None or p.suffix in suffixes)}
+ 
+ 

@@ -2,6 +2,8 @@
 
 The main experiments use StreamingBench real-time and OVO-Bench real-time. Prepare the native annotations and videos as described in [Dataset Preparation](DATASETS.md). Preserve original video resolution.
 
+For the separately supplied EgoProbe evaluation package, see [EgoProbe evaluation](EGOPROBE.md).
+
 ## Run one configuration
 
 StreamingBench example:
