@@ -8,27 +8,30 @@
 
 </div>
 
-MEMO is a training-free memory framework for streaming video understanding. It segments a video into semantic chunks using global, entity, and spatial cues, then retrieves visual evidence for each question.
+MEMO is a training-free framework for streaming video understanding. It builds multi-level, entity-aware structured memory and recalls relevant visual evidence for each query.
 
 <p align="center">
   <a href="assets/teaser.png"><img src="assets/teaser.png" alt="Comparison of streaming video memory paradigms" width="80%"></a>
 </p>
-<p align="center"><em>MEMO keeps lightweight retrieval indices separate from high-resolution visual evidence.</em></p>
+<p align="center"><em>Lightweight structured indices guide on-demand access to high-resolution visual evidence.</em></p>
 
 ## 🧠 Overview
 
-- **Multi-level perception:** CLIP, Grounding-DINO, and SAM2 capture scene and entity information.
-- **Online memory:** adaptive chunks retain lightweight retrieval indices on GPU and visual evidence on CPU.
-- **Question answering:** the top 3 historical chunks and the current chunk supply up to 8 + 8 frames to an MLLM.
+The pipeline has four stages:
+
+- **Multi-Level Entity-Aware Perception:** Measures semantic continuity using global semantics, local entity features, and spatial structure.
+- **Online Temporal Chunking:** Uses an adaptive similarity threshold to form semantically coherent chunks.
+- **Structured Memory Construction:** Stores lightweight global and entity-level retrieval indices on GPU and high-resolution visual evidence on CPU.
+- **Query-Specific Evidence Retrieval:** Recalls visual evidence from relevant chunks and combines it with frames from the current active segment for MLLM reasoning.
 
 <p align="center">
   <a href="assets/pipeline.png"><img src="assets/pipeline.png" alt="MEMO pipeline: perception, chunking, memory, and retrieval" width="100%"></a>
 </p>
-<p align="center"><em>MEMO processes incoming frames, builds structured memory, and retrieves evidence for each query.</em></p>
+<p align="center"><em>MEMO's four-stage streaming pipeline.</em></p>
 
 ## 📊 Main Results
 
-The following online-method results are from [Table 1 of the paper](https://arxiv.org/pdf/2609.38900). Values are average accuracy (%): OVO-Bench uses its six real-time tasks; StreamingBench uses its real-time subset. The full per-task table is in the paper.
+Online results from [Table 1 of the paper](https://arxiv.org/pdf/2609.38900) are average accuracy (%) over OVO-Bench's six real-time tasks and StreamingBench's real-time subset.
 
 **Online methods with training**
 
@@ -59,13 +62,13 @@ The following online-method results are from [Table 1 of the paper](https://arxi
 | Qwen3-VL-8B | 1 fps | 70.1 | 73.2 |
 | ↳ **+ MEMO** | 1 fps | **76.0** | **83.7** |
 
-These are the paper's reported results; the [LaTeX source for these online rows](docs/ONLINE_RESULTS.tex) is provided for reuse. Full benchmark scores have not been regenerated with this release. See [Protocol and Provenance](docs/PROTOCOL.md) and [Validation](docs/VALIDATION.md).
+These are reported paper results; full benchmarks have not been rerun with this release. See the [online table LaTeX](docs/ONLINE_RESULTS.tex), [protocol](docs/PROTOCOL.md), and [validation](docs/VALIDATION.md).
 
 ## 🚀 Getting Started
 
-Inference needs Linux, Python 3.10, one NVIDIA CUDA GPU, and model weights. Follow [Setup and Model Weights](docs/SETUP.md) first.
+Inference requires Linux, Python 3.10, one NVIDIA CUDA GPU, and model weights. See [Setup and Model Weights](docs/SETUP.md).
 
-Validate the bundled synthetic example without loading models:
+Validate the synthetic example without loading models:
 
 ```bash
 python reproduce.py \
@@ -86,7 +89,7 @@ CUDA_VISIBLE_DEVICES=0 python reproduce.py \
   --output results/smoke.json
 ```
 
-The main configurations are in `configs/main/` (four backbones × two benchmarks). See [Dataset Preparation](docs/DATASETS.md) and [Benchmark Evaluation](docs/EVALUATION.md) for full commands, baselines, profiling, and result checks. Custom JSON data is covered in [Custom Datasets](docs/CUSTOM_DATASET.md).
+Benchmark configs are in `configs/main/` (four backbones × two benchmarks). See [Dataset Preparation](docs/DATASETS.md) and [Benchmark Evaluation](docs/EVALUATION.md); custom JSON is covered in [Custom Datasets](docs/CUSTOM_DATASET.md).
 
 ## 📁 Repository Guide
 
