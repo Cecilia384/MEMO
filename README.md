@@ -64,7 +64,7 @@ These are reported paper results; full benchmarks have not been rerun with this 
 
 ## 🚀 Getting Started
 
-Inference requires Linux, Python 3.10, one NVIDIA CUDA GPU, and model weights. For the tested configurations, prepare at least 24 GB of GPU memory, or 48 GB for Qwen3-VL-8B. See [Setup and Model Weights](docs/SETUP.md) for per-model guidance.
+Inference requires Linux, Python 3.10, one NVIDIA CUDA GPU, and model weights. Our experiments used one NVIDIA A6000 GPU per run. See [Setup and Model Weights](docs/SETUP.md).
 
 Validate the synthetic example without loading models:
 
