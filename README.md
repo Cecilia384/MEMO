@@ -4,7 +4,7 @@
 
 **Multi-Level Entity-Aware Memory for Streaming Video Understanding**
 
-ACM Multimedia 2026 · [Paper](https://arxiv.org/abs/2609.38900) · [Citation](#citation-and-license) · [MIT License](LICENSE)
+**ACM Multimedia 2026** · [Paper](https://arxiv.org/abs/2609.38900) · [Citation](#citation-and-license) · [MIT License](LICENSE)
 
 </div>
 
