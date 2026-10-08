@@ -15,7 +15,7 @@ MEMO is a training-free memory framework for streaming video understanding. It s
 </p>
 <p align="center"><em>MEMO keeps lightweight retrieval indices separate from high-resolution visual evidence.</em></p>
 
-## Overview
+## 🧠 Overview
 
 - **Multi-level perception:** CLIP, Grounding-DINO, and SAM2 capture scene and entity information.
 - **Online memory:** adaptive chunks retain lightweight retrieval indices on GPU and visual evidence on CPU.
@@ -26,7 +26,7 @@ MEMO is a training-free memory framework for streaming video understanding. It s
 </p>
 <p align="center"><em>MEMO processes incoming frames, builds structured memory, and retrieves evidence for each query.</em></p>
 
-## Main Results
+## 📊 Main Results
 
 The following online-method results are from [Table 1 of the paper](https://arxiv.org/pdf/2609.38900). Values are average accuracy (%): OVO-Bench uses its six real-time tasks; StreamingBench uses its real-time subset. The full per-task table is in the paper.
 
@@ -61,7 +61,7 @@ The following online-method results are from [Table 1 of the paper](https://arxi
 
 These are the paper's reported results; the [LaTeX source for these online rows](docs/ONLINE_RESULTS.tex) is provided for reuse. Full benchmark scores have not been regenerated with this release. See [Protocol and Provenance](docs/PROTOCOL.md) and [Validation](docs/VALIDATION.md).
 
-## Getting Started
+## 🚀 Getting Started
 
 Inference needs Linux, Python 3.10, one NVIDIA CUDA GPU, and model weights. Follow [Setup and Model Weights](docs/SETUP.md) first.
 
@@ -88,7 +88,7 @@ CUDA_VISIBLE_DEVICES=0 python reproduce.py \
 
 The main configurations are in `configs/main/` (four backbones × two benchmarks). See [Dataset Preparation](docs/DATASETS.md) and [Benchmark Evaluation](docs/EVALUATION.md) for full commands, baselines, profiling, and result checks. Custom JSON data is covered in [Custom Datasets](docs/CUSTOM_DATASET.md).
 
-## Repository Guide
+## 📁 Repository Guide
 
 | Path | Purpose |
 | --- | --- |
