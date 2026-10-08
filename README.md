@@ -4,7 +4,7 @@
 
 **Multi-Level Entity-Aware Memory for Streaming Video Understanding**
 
-ACM Multimedia 2026 · [Paper](https://arxiv.org/abs/2609.38900) · [Citation](CITATION.cff) · [MIT License](LICENSE)
+ACM Multimedia 2026 · [Paper](https://arxiv.org/abs/2609.38900) · [Citation](#citation-and-license) · [MIT License](LICENSE)
 
 </div>
 
@@ -100,4 +100,19 @@ The main configurations are in `configs/main/` (four backbones × two benchmarks
 
 ## Citation and License
 
-Please cite the [MEMO paper](https://arxiv.org/abs/2609.38900); citation metadata is in [CITATION.cff](CITATION.cff). The code is released under the [MIT License](LICENSE). Model weights and benchmark data have their own terms; see [NOTICE.md](NOTICE.md).
+If you use MEMO, please cite the [paper](https://arxiv.org/abs/2609.38900):
+
+```bibtex
+@misc{li2026memomultilevelentityawarememory,
+  title={MEMO: Multi-Level Entity-Aware Memory for Streaming Video Understanding},
+  author={Yinying Li and Yuqian Fu and Yulin Dai and Jingyu Gong and Tianwen Qian and Xiaoling Wang},
+  year={2026},
+  eprint={2609.38900},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  doi={10.1145/3767308.3835688},
+  url={https://arxiv.org/abs/2609.38900}
+}
+```
+
+The code is released under the [MIT License](LICENSE). Model weights and benchmark data have their own terms; see [NOTICE.md](NOTICE.md).
