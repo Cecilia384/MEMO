@@ -110,7 +110,7 @@ If you use MEMO, please cite the [paper](https://arxiv.org/abs/2609.38900):
   eprint={2609.38900},
   archivePrefix={arXiv},
   primaryClass={cs.CV},
-  doi={10.1145/3767308.3835688},
+  doi={10.48550/arXiv.2609.38900},
   url={https://arxiv.org/abs/2609.38900}
 }
 ```
