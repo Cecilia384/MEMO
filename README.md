@@ -1,8 +1,16 @@
 <div align="center">
 
-# MEMO：Multi-Level Entity-Aware Memory for Streaming Video Understanding
+<h1>
+  <img src="assets/logo.png" alt="MEMO logo" width="60" align="absmiddle">
+  MEMO: Multi-Level Entity-Aware Memory for Streaming Video Understanding
+</h1>
 
-**ACM Multimedia 2026** · [Paper](https://arxiv.org/abs/2609.38900) · [Citation](#citation-and-license) · [MIT License](LICENSE)
+<p>
+  <strong>ACM Multimedia 2026</strong>
+  · <a href="https://arxiv.org/abs/2609.38900">Paper</a>
+  · <a href="#citation-and-license">Citation</a>
+  · <a href="LICENSE">MIT License</a>
+</p>
 
 </div>
 
