@@ -8,6 +8,7 @@
 <p>
   <strong>ACM Multimedia 2026</strong>
   · <a href="https://arxiv.org/abs/2609.38900">Paper</a>
+  · <a href="https://cecilia384.github.io/MEMO/">Project Page</a>
   · <a href="#citation-and-license">Citation</a>
   · <a href="LICENSE">MIT License</a>
 </p>
