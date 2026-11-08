@@ -122,6 +122,16 @@ If you use MEMO, please cite the [paper](https://arxiv.org/abs/2609.38900):
   doi={10.48550/arXiv.2609.38900},
   url={https://arxiv.org/abs/2609.38900}
 }
+
+@misc{dong2026objectstreamlatentobjectsmemory,
+  title={ObjectStream: Latent Objects as Memory Anchors for Streaming Video Understanding},
+  author={Mingkang Dong and Muxin Pu and Jie Li and Bohan Guo and Songruo Chen and Bin Ren and Xu Zheng and Chen Zhao and Tianwen Qian and Mohamed Elhoseiny and Yuqian Fu},
+  year={2026},
+  eprint={2607.28312},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2607.28312}
+}
 ```
 
 The code is released under the [MIT License](LICENSE). Model weights and benchmark data have their own terms; see [NOTICE.md](NOTICE.md).
