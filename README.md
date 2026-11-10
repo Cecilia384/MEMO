@@ -7,7 +7,8 @@
 
 <p>
   <strong>ACM Multimedia 2026</strong>
-  · <a href="https://arxiv.org/abs/2609.38900">Paper</a>
+  · <a href="https://doi.org/10.1145/3767308.3835688">ACM Paper</a>
+  · <a href="https://arxiv.org/abs/2609.38900">arXiv</a>
   · <a href="https://cecilia384.github.io/MEMO/">Project Page</a>
   · <a href="#citation-and-license">Citation</a>
   · <a href="LICENSE">MIT License</a>
@@ -109,18 +110,18 @@ Benchmark configs are in `configs/main/` (four backbones × two benchmarks). See
 
 ## Citation and License
 
-If you use MEMO, please cite the [paper](https://arxiv.org/abs/2609.38900):
+If you use MEMO, please cite the [ACM paper](https://doi.org/10.1145/3767308.3835688):
 
 ```bibtex
-@misc{li2026memomultilevelentityawarememory,
-  title={MEMO: Multi-Level Entity-Aware Memory for Streaming Video Understanding},
-  author={Yinying Li and Yuqian Fu and Yulin Dai and Jingyu Gong and Tianwen Qian and Xiaoling Wang},
-  year={2026},
-  eprint={2609.38900},
-  archivePrefix={arXiv},
-  primaryClass={cs.CV},
-  doi={10.48550/arXiv.2609.38900},
-  url={https://arxiv.org/abs/2609.38900}
+@inproceedings{li2026memomultilevelentityawarememory,
+  author    = {Li, Yinying and Fu, Yuqian and Dai, Yulin and Gong, Jingyu and Qian, Tianwen and Wang, Xiaoling},
+  title     = {{MEMO}: Multi-Level Entity-Aware Memory for Streaming Video Understanding},
+  booktitle = {Proceedings of the 34th ACM International Conference on Multimedia},
+  year      = {2026},
+  pages     = {5591--5600},
+  publisher = {Association for Computing Machinery},
+  doi       = {10.1145/3767308.3835688},
+  url       = {https://doi.org/10.1145/3767308.3835688}
 }
 
 @misc{dong2026objectstreamlatentobjectsmemory,
